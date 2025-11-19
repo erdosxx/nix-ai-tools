@@ -2,19 +2,19 @@
   lib,
   stdenv,
   fetchzip,
-  nodejs_20,
+  nodejs,
 }:
 
 stdenv.mkDerivation rec {
   pname = "claude-code-router";
-  version = "1.0.65";
+  version = "1.0.67";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@musistudio/claude-code-router/-/claude-code-router-${version}.tgz";
-    hash = "sha256-HSp9g55exVL43kpF2h3i29eUBVZ4bo7txFPZnitVn54=";
+    hash = "sha256-almmVJLO+G6X5YM3KPRh1IX1MF1PAF7NDLNJy1/8wgA=";
   };
 
-  nativeBuildInputs = [ nodejs_20 ];
+  nativeBuildInputs = [ nodejs ];
 
   installPhase = ''
     runHook preInstall
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
     # Replace the shebang with the correct node path
     substituteInPlace $out/bin/ccr \
-      --replace-quiet "#!/usr/bin/env node" "#!${nodejs_20}/bin/node"
+      --replace-quiet "#!/usr/bin/env node" "#!${nodejs}/bin/node"
 
     # Install the WASM file in the same directory as the CLI
     cp $src/dist/tiktoken_bg.wasm $out/bin/

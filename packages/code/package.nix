@@ -10,22 +10,26 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "code";
-  version = "0.4.9";
+  version = "0.4.16";
 
   src = fetchFromGitHub {
     owner = "just-every";
     repo = "code";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-O+byFgBN76OdI5szzztU0OdWVjOLTTJ+uxXI5fj/tyw=";
+    hash = "sha256-/WXSU4HUlvSX7RQC66LSNoDUw29IX4rzj5wLl/wSklU=";
   };
 
-  sourceRoot = "${finalAttrs.src.name}/codex-rs";
+  sourceRoot = "${finalAttrs.src.name}/code-rs";
 
-  cargoHash = "sha256-ECUU2rUzRkhg6M3DAckfQT1czMJA3WmzaKYOUjJNumE=";
+  cargoHash = "sha256-QI+FRx6uWpc3RvMpOQftrS8FHHoVc5pfr7XKk5T/yQQ=";
 
   cargoBuildFlags = [
-    "--package"
-    "codex-cli"
+    "--bin"
+    "code"
+    "--bin"
+    "code-tui"
+    "--bin"
+    "code-exec"
   ];
 
   nativeBuildInputs = [
@@ -45,9 +49,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   postInstall = lib.optionalString installShellCompletions ''
     installShellCompletion --cmd code \
-      --bash <($out/bin/codex completion bash) \
-      --fish <($out/bin/codex completion fish) \
-      --zsh <($out/bin/codex completion zsh)
+      --bash <($out/bin/code completion bash) \
+      --fish <($out/bin/code completion fish) \
+      --zsh <($out/bin/code completion zsh)
   '';
 
   doInstallCheck = true;

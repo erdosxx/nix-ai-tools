@@ -4,9 +4,9 @@
   fetchFromGitHub,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "groq-code-cli";
-  version = "1.0.2-unstable-2025-09-05";
+  version = "0-unstable-2025-09-05";
 
   src = fetchFromGitHub {
     owner = "build-with-groq";
@@ -15,12 +15,7 @@ buildNpmPackage rec {
     hash = "sha256-AyuGMMFcMQXclRbR1AJstop3QRD4lBzXI6eAAKOO3t0=";
   };
 
-  npmDepsHash = "sha256-Vfr4F+t+0QrzbOqNMCFd3E68dX13UmnOYoI2VpVkvFw=";
-
-  postPatch = ''
-    # Update package-lock.json with the one we generated
-    cp ${./package-lock.json} package-lock.json
-  '';
+  npmDepsHash = "sha256-0ly0yumpqQPGUcMvO0x3ZGZ6X/dVM48X4QapXR05Ugk=";
 
   meta = with lib; {
     description = "A highly customizable, lightweight, and open-source coding CLI powered by Groq for instant iteration";

@@ -2,23 +2,21 @@
   lib,
   buildNpmPackage,
   fetchurl,
-  nodejs_22,
+  nodejs,
 }:
 
 buildNpmPackage (finalAttrs: {
   pname = "copilot-cli";
-  version = "0.0.353";
+  version = "0.0.358";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/@github/copilot/-/copilot-${finalAttrs.version}.tgz";
-    hash = "sha256-JjQ8Xh7Ct+a6MK4om+3EB4Yancxdeb4CRAdzsIbcIX4=";
+    hash = "sha256-WEGgDbej3+2RtYe1EjfgJMMyDllsXiIme+sujW/VrHQ=";
   };
 
   # Dependencies are bundled in the tarball
   npmDepsHash = "sha256-JhXoiLrG/CDNlgwSnhUG1wgLjnVmBKgz0twMx5wVbEE=";
   forceEmptyCache = true;
-
-  nodejs = nodejs_22;
 
   dontNpmBuild = true;
 
@@ -41,7 +39,7 @@ buildNpmPackage (finalAttrs: {
     cp -r . $out/lib/${finalAttrs.pname}
 
     mkdir -p $out/bin
-    makeWrapper ${nodejs_22}/bin/node $out/bin/copilot \
+    makeWrapper ${nodejs}/bin/node $out/bin/copilot \
       --add-flags "$out/lib/${finalAttrs.pname}/index.js"
 
     runHook postInstall

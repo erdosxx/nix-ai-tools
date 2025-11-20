@@ -1,8 +1,8 @@
 {
   description = "Exploring integration between Nix and AI coding agents";
   nixConfig = {
-    extra-substituters = [ "https://numtide.cachix.org" ];
-    extra-trusted-public-keys = [ "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=" ];
+    extra-substituters = ["https://numtide.cachix.org"];
+    extra-trusted-public-keys = ["numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="];
   };
 
   inputs = {
@@ -17,10 +17,12 @@
     };
   };
 
-  outputs =
-    inputs:
+  outputs = inputs:
     inputs.blueprint {
       inherit inputs;
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs = {
+        config.allowUnfree = true;
+        overlays = [(import ./overlays.nix)];
+      };
     };
 }
